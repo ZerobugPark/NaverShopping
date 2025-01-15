@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupConfigure()
         view.backgroundColor = .black
-        navigationItem.title = "도봉쇼핑쇼핑"
+        navigationItem.title = "네이버마켓"
         
         searchBar.delegate = self
     }
@@ -29,6 +29,8 @@ class ViewController: UIViewController {
     
 
 }
+
+// MARK: - View Setting
 
 extension ViewController: ConfigureView {
     
@@ -63,6 +65,7 @@ extension ViewController: ConfigureView {
         searchBar.searchTextField.clipsToBounds = true
         searchBar.searchTextField.leftView?.tintColor = .lightGray
         searchBar.searchTextField.tokenBackgroundColor = .white
+        searchBar.searchTextField.textColor = .white
         searchBar.searchBarStyle = .minimal
        
 
@@ -71,18 +74,42 @@ extension ViewController: ConfigureView {
     
     
 }
+// MARK: - SearchBarDelegate
 
 extension ViewController: UISearchBarDelegate {
     
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print(#function)
-    }
-    
     // search button clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
         
+        let vc = ItemViewController()
+        
+        if let text = searchBar.text {
+            if text.count < 2 {
+                let msg = "2글자 이상 입력해주세요"
+                alertMsg(msg)
+                return
+            } else {
+                vc.navigationTitle = text
+            }
+        }
+        navigationController?.pushViewController(vc, animated: true)
         view.endEditing(true)
     }
+    
+}
+
+// MARK: - Alert Controller
+
+extension ViewController {
+    
+    private func alertMsg(_ msg: String) {
+        let alert = UIAlertController(title: "알림", message: msg, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .cancel)
+        
+        alert.addAction(ok)
+        present(alert,animated: true)
+        
+    }
+    
 }
