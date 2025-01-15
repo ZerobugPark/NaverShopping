@@ -6,3 +6,29 @@
 //
 
 import Foundation
+
+
+struct NaverShoppingInfo: Decodable {
+    let lastBuildDate: String
+    let total: Int
+    let start: Int
+    let display: Int
+    let items: [Item]
+    
+}
+
+struct Item: Decodable {
+    let title: String
+    let image: String
+    let lprice: String
+    let mallName: String
+}
+
+enum Filters: String {
+    case sim = "sim"
+    case date = "date"
+    case asc = "asc"
+    case dsc = "dsc"
+    
+}
+
