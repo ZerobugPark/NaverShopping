@@ -9,13 +9,34 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let searchBar = UISearchBar()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        view.backgroundColor = .black
         navigationItem.title = "도봉쇼핑쇼핑"
     }
 
+    
+    
 
+}
+
+extension ViewController: ConfigureView {
+    
+    func configureHierarchy() {
+        view.addSubview(searchBar)
+    }
+    
+    func configureLayout() {
+        <#code#>
+    }
+    
+    func configureView() {
+        <#code#>
+    }
+    
+    
 }
 
