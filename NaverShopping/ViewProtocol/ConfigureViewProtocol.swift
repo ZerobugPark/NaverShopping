@@ -9,6 +9,7 @@ import Foundation
 
 
 protocol ConfigureView {
+    func setupConfigure()
     func configureHierarchy()
     func configureLayout()
     func configureView()
