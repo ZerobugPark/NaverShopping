@@ -11,6 +11,7 @@ import Alamofire
 import SnapKit
 
 
+
 class ViewController: UIViewController {
 
     let searchBar = UISearchBar()
@@ -24,9 +25,6 @@ class ViewController: UIViewController {
         
         searchBar.delegate = self
     }
-
-    
-    
 
 }
 
@@ -85,12 +83,15 @@ extension ViewController: UISearchBarDelegate {
         let vc = ItemViewController()
         
         if let text = searchBar.text {
-            if text.count < 2 {
+            let str = text.replacingOccurrences(of: " ", with: "")
+            if str.count < 2 {
                 let msg = "2글자 이상 입력해주세요"
-                alertMsg(msg)
+                
+                showAlertMsg(msg) {
+                }
                 return
             } else {
-                vc.navigationTitle = text
+                vc.navigationTitle = str
             }
         }
         navigationController?.pushViewController(vc, animated: true)
@@ -103,7 +104,7 @@ extension ViewController: UISearchBarDelegate {
 
 extension ViewController {
     
-    private func alertMsg(_ msg: String) {
+    private func showAlertMsg(_ msg: String, completionHandler: @escaping () -> Void) {
         let alert = UIAlertController(title: "알림", message: msg, preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .cancel)
         
