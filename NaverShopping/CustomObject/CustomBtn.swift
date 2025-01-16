@@ -47,3 +47,39 @@ class CustomBtn: UIButton {
     
  
 }
+
+//@available (iOS 15.0, *)
+//extension UIButton.Configuration {
+//    
+//    static func youngStyle(title: String, status: Bool, tagNum: Int) -> UIButton.Configuration {
+//        var config = UIButton.Configuration.plain()
+//        
+//        config.title = title
+//        
+//        
+//        if status {
+//            setTitleColor(.black, for: .normal)
+//            backgroundColor = .white
+//        } else {
+//            setTitleColor(.white, for: .normal)
+//            backgroundColor = .black
+//        }
+//        tag = tagNum
+//        layer.borderColor = UIColor.white.cgColor
+//        layer.borderWidth = 1
+//        titleLabel?.font = .systemFont(ofSize: 15)
+//        
+//        config.background.cornerRadius = 10
+//        config.background.customView?.clipsToBounds = true
+//        
+//        config.cornerStyle = .capsule
+//        //layer.cornerRadius = 10
+//        //clipsToBounds = true
+//        
+//        
+//        
+//        
+//        return config
+//    }
+//    
+//}

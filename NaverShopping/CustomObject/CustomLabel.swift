@@ -9,10 +9,9 @@ import UIKit
 
 class CustomLabel: UILabel {
     
-    init(title: String, fontSize: CGFloat, color: UIColor, bold: Bool) {
+    init(fontSize: CGFloat, color: UIColor, bold: Bool) {
         super.init(frame: .zero)
         
-        text = title
         textColor =  color
         font = bold ? .boldSystemFont(ofSize: fontSize)  : .systemFont(ofSize: fontSize)
         
