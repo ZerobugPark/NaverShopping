@@ -61,8 +61,7 @@ class ItemCollectionViewCell: UICollectionViewCell{
         } else {
             likeBtn.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        // 왜 status는 하나의 변수인데, 다 각자 개별로 동작을 하는걸까?... 의문이네..
-        print(status)
+        
         status.toggle()
         
     }

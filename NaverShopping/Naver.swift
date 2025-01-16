@@ -24,7 +24,7 @@ struct Item: Decodable {
     let mallName: String
 }
 
-enum Filters: String {
+enum Sorts: String {
     case sim = "sim"
     case date = "date"
     case asc = "asc"
@@ -32,3 +32,18 @@ enum Filters: String {
     
 }
 
+struct APIParameter {
+    var display: Int
+    var sort: String
+    var startIndex: Int
+    lazy var maxNum: Int = display * 1000
+    
+    var totalCount: Int {
+        get {
+            display * 1000
+        }
+        set {
+            maxNum = newValue
+        }
+    }
+}
