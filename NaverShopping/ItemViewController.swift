@@ -135,10 +135,11 @@ extension ItemViewController: ConfigureView {
         let layout = UICollectionViewFlowLayout()
         
         let deviceWidth = UIScreen.main.bounds.size.width
-        let spacing: CGFloat = 0
+        let spacing: CGFloat = 16
         let inset: CGFloat = 16
-        let objectWidth = (deviceWidth / 2) - (spacing + (inset*2))
-   
+        let objectWidth = (deviceWidth - (spacing + (inset*2))) / 2
+        //(deviceWidth / 2) - (spacing + (inset*2))
+        
         layout.itemSize = CGSize(width: objectWidth, height:  objectWidth * 1.5)
         layout.sectionInset = UIEdgeInsets(top: 16, left: inset, bottom: 0, right: inset)
         layout.scrollDirection = .vertical
