@@ -24,6 +24,7 @@ struct Item: Decodable {
     let mallName: String
 }
 
+
 enum Sorts: String {
     case sim = "sim"
     case date = "date"
@@ -31,6 +32,7 @@ enum Sorts: String {
     case dsc = "dsc"
     
 }
+
 
 struct APIParameter {
     var display: Int

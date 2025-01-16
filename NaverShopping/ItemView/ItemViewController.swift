@@ -152,12 +152,9 @@ extension ItemViewController {
         }
         
         AF.request(url, method: .get, headers: header).validate(statusCode: 0..<300).responseDecodable(of: NaverShoppingInfo.self) { response in
-            
-            print(response.response?.statusCode)
-            
+        
             switch response.result {
             case .success(let value):
-
                 if !selectedButton {
                     self.items.append(contentsOf: value.items)
                 } else {
@@ -177,7 +174,11 @@ extension ItemViewController {
                 }
                 
             case.failure(let error):
-                print(error)
+
+                self.showAlertMsg(error.localizedDescription) {
+                    
+                }
+
             }
         }
         
