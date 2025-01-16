@@ -108,7 +108,6 @@ class ItemCollectionViewCell: BaseCollectionViewCell {
 
 extension ItemCollectionViewCell {
     @objc private func likeButtonTapped(_ sender: UIButton) {
-        print(#function)
         
         if !status {
             likeBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)

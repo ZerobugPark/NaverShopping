@@ -13,7 +13,6 @@ class BaseView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        print(#function,"부모")
         configureHierarchy()
         configureLayout()
         configureView()

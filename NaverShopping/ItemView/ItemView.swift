@@ -12,6 +12,8 @@ class ItemView: BaseView {
     let resultCountLabel = UILabel()
     let buttonStackView = UIStackView()
     var buttons: [CustomBtn] = []
+    
+    
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
     override func configureHierarchy() {
@@ -63,7 +65,6 @@ class ItemView: BaseView {
     }
     
     private func customButtonConfigure() {
-        print(#function)
         let buttonTitle = [" 정확도 ", " 날짜순 ", " 가격높은순 ", " 가격낮은순 "]
         for i in 0...3 {
             if i > 0 {

@@ -11,6 +11,7 @@ import Alamofire
 import SnapKit
 
 
+
 class ItemViewController: UIViewController {
     
     static let id = "ItemViewController"
@@ -80,11 +81,15 @@ extension ItemViewController {
 
         for i in 0..<itemView.buttons.count {
             if i == tag {
-                itemView.buttons[i].setTitleColor(.black, for: .normal)
-                itemView.buttons[i].backgroundColor = .white
+                itemView.buttons[i].configuration?.baseForegroundColor = .black
+                itemView.buttons[i].configuration?.baseBackgroundColor = .white
+//                itemView.buttons[i].setTitleColor(.black, for: .normal)
+//                itemView.buttons[i].backgroundColor = .white
             } else {
-                itemView.buttons[i].setTitleColor(.white, for: .normal)
-                itemView.buttons[i].backgroundColor = .black
+                itemView.buttons[i].configuration?.baseForegroundColor = .white
+                itemView.buttons[i].configuration?.baseBackgroundColor = .black
+//                itemView.buttons[i].setTitleColor(.white, for: .normal)
+//                itemView.buttons[i].backgroundColor = .black
             }
         }
     }
@@ -114,16 +119,15 @@ extension ItemViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension ItemViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print(#function,indexPaths)
+        //print(#function,indexPaths)
         for item in indexPaths {
             if items.count - 2 == item.item {
                 apiParm.startIndex += 30
                 if items.count >= apiParm.maxNum {
                     let msg = "더 이상 조회할 데이터가 없습니다"
                     showAlertMsg(msg) {
-                        
+                    
                     }
-
                     return
                 }
                 callRequest(apiParm.startIndex, selectedButton: false)
@@ -134,57 +138,33 @@ extension ItemViewController: UICollectionViewDataSourcePrefetching {
 }
 
 // MARK: - 네이버 쇼핑 API 통신
-
 extension ItemViewController {
     
     func callRequest(_ page: Int, selectedButton: Bool) {
-        print(#function)
-                
+        
         let searchItem = navigationTitle
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(searchItem)&display=\(apiParm.display)" + "&sort=\(apiParm.sort)&start=\(apiParm.startIndex)"
-        
-        let header: HTTPHeaders = ["X-Naver-Client-Id": APIKey.clientId, "X-Naver-Client-Secret": APIKey.clientSecret]
-        
-        if false {
-            AF.request(url, method: .get, headers: header).responseString { value in
-                print(value)
+        NetworkManager.shared.loadData(searchItem: searchItem, apiParm: apiParm, completionHandler: { value in
+            if !selectedButton {
+                self.items.append(contentsOf: value.items)
+            } else {
+                self.items = value.items
             }
-        }
-        
-        AF.request(url, method: .get, headers: header).validate(statusCode: 0..<300).responseDecodable(of: NaverShoppingInfo.self) { response in
-        
-            switch response.result {
-            case .success(let value):
-                if !selectedButton {
-                    self.items.append(contentsOf: value.items)
-                } else {
-                    self.items = value.items
-                }
-                
-                self.itemView.collectionView.reloadData()
-               
-                self.itemView.resultCountLabel.text = value.total.formatted() + " 개의 검색 결과"
-
-                if self.apiParm.startIndex == 1 && value.total != 0 {
-                    self.itemView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-                }
-                
-                if value.total < self.apiParm.totalCount {
-                    self.apiParm.totalCount =  value.total
-                }
-                
-            case.failure(let error):
-
-                self.showAlertMsg(error.localizedDescription) {
-                    
-                }
-
+            
+            self.itemView.collectionView.reloadData()
+            
+            self.itemView.resultCountLabel.text = value.total.formatted() + " 개의 검색 결과"
+            
+            if self.apiParm.startIndex == 1 && value.total != 0 {
+                self.itemView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
             }
-        }
-        
+            
+            if value.total < self.apiParm.totalCount {
+                self.apiParm.totalCount =  value.total
+            }
+        })
     }
-    
 }
+
 
 // MARK: - Alert
 extension ItemViewController {
