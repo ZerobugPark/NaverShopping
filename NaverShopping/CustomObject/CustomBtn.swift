@@ -12,21 +12,10 @@ class CustomBtn: UIButton {
     init(title: String, status: Bool, tagNum: Int) {
         super.init(frame: .zero)
         
-        setTitle(title, for: .normal)
-        if status {
-            setTitleColor(.black, for: .normal)
-            backgroundColor = .white
-        } else {
-            setTitleColor(.white, for: .normal)
-            backgroundColor = .black
-        }
+        configuration = .youngStyle(title: title, status: status)
+        
         tag = tagNum
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 1
-        titleLabel?.font = .systemFont(ofSize: 15)
-        
-        
-        layer.cornerRadius = 10
+        layer.cornerRadius = 20
         clipsToBounds = true
     }
     
@@ -49,37 +38,30 @@ class CustomBtn: UIButton {
 }
 
 //@available (iOS 15.0, *)
-//extension UIButton.Configuration {
-//    
-//    static func youngStyle(title: String, status: Bool, tagNum: Int) -> UIButton.Configuration {
-//        var config = UIButton.Configuration.plain()
-//        
-//        config.title = title
-//        
-//        
-//        if status {
-//            setTitleColor(.black, for: .normal)
-//            backgroundColor = .white
-//        } else {
-//            setTitleColor(.white, for: .normal)
-//            backgroundColor = .black
-//        }
-//        tag = tagNum
-//        layer.borderColor = UIColor.white.cgColor
-//        layer.borderWidth = 1
-//        titleLabel?.font = .systemFont(ofSize: 15)
-//        
-//        config.background.cornerRadius = 10
-//        config.background.customView?.clipsToBounds = true
-//        
-//        config.cornerStyle = .capsule
-//        //layer.cornerRadius = 10
-//        //clipsToBounds = true
-//        
-//        
-//        
-//        
-//        return config
-//    }
-//    
-//}
+extension CustomBtn.Configuration {
+    
+    static func youngStyle(title: String, status: Bool) -> UIButton.Configuration {
+       
+        var config = UIButton.Configuration.filled()
+        
+        var titleContainer = AttributeContainer()
+        titleContainer.font = .systemFont(ofSize: 15)
+        config.attributedTitle = AttributedString(title, attributes: titleContainer)
+
+       
+        if status {
+            config.baseForegroundColor = .black
+            config.baseBackgroundColor = .white
+
+        } else {
+            config.baseForegroundColor = .white
+            config.baseBackgroundColor = .black
+        }
+        
+        config.cornerStyle = .capsule
+
+        
+        return config
+    }
+    
+}
