@@ -43,7 +43,7 @@ enum NaverRequest {
     var parameter: Parameters? {
         switch self {
         case let .getInfo(query: query, display: display, sort: sort, startIndex: startIndex):
-            let parameters = ["query": query, "display": String(display), "sort": sort, "startIndex": String(startIndex)]
+            let parameters = ["query": query, "display": String(display), "sort": sort, "start": String(startIndex)]
             return parameters
    
         }
