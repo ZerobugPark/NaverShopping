@@ -29,7 +29,7 @@ final class ResultViewController: UIViewController {
     private func setupDelegate() {
         resultView.collectionView.delegate = self
         resultView.collectionView.dataSource = self
-        //resultView.collectionView.prefetchDataSource = self
+        resultView.collectionView.prefetchDataSource = self
         
         resultView.collectionView.register(ResultViewCollectionViewCell.self, forCellWithReuseIdentifier: "ResultViewCollectionViewCell")
     }
@@ -50,10 +50,12 @@ final class ResultViewController: UIViewController {
             
         }
         
+        // 리스트 업데이트
         resultModel.outputItems.lazyBind { [weak self] _ in
             self?.resultView.collectionView.reloadData()
         }
         
+        // 총 검색에 대한 항목 수
         resultModel.outputTotal.lazyBind { [weak self] text in
             self?.resultView.resultCountLabel.text = text
         }
@@ -73,7 +75,8 @@ final class ResultViewController: UIViewController {
 
 
 // MARK: - CollectionView Delegate
-extension ResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return resultModel.outputItems.value.count
@@ -90,6 +93,12 @@ extension ResultViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        resultModel.inputPagenagtion.value = indexPaths
+        print(indexPaths)
+    }
+    
+    
     
 }
 
@@ -100,11 +109,13 @@ extension ResultViewController {
     @objc private func filterButtonTapped(_ sender: UIButton) {
         changeButtonColor(tag: sender.tag)
         resultModel.inputFilterButtonTapped.value = sender.tag
+        // 필터 버튼 클릭시 최상단으로 이동
+        resultView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
     }
     
     
     private func changeButtonColor(tag: Int) {
-
+        //버튼 뷰 업데이트
         for i in 0..<resultView.buttons.count {
             if i == tag {
                 resultView.buttons[i].configuration?.baseForegroundColor = .black

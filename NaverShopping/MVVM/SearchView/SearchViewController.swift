@@ -31,7 +31,6 @@ final class SearchViewController: UIViewController {
                 let vc = ResultViewController()
                 
                 vc.resultModel.outputSearchText.value = str
-                print(str)
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             } else {
