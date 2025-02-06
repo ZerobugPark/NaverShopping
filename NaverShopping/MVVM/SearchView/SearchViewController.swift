@@ -7,71 +7,64 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
-
+final class SearchViewController: UIViewController {
+    
     let serachView = SearchView()
     let serachModel = SearchViewModel()
     
     override func loadView() {
         view = serachView
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-    
-        navigationItem.title = serachModel.navigationTitle
         
+        setNavigationtitle()
         serachView.searchBar.delegate = self
         bindData()
     }
     
-    
-    
     private func bindData() {
-
-        serachModel.outputSignal.lazyBind { status in
+        
+        serachModel.outputSignal.lazyBind { (status, str) in
             if status {
+                let vc = ResultViewController()
                 
+                vc.resultModel.outputSearchText.value = str
+                print(str)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             } else {
                 self.showAlertMsg()
             }
         }
     }
     
-
- 
-
+    private func setNavigationtitle() {
+        
+        navigationItem.title = serachModel.navigationTitle
+        
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+    }
+    
+    
+    
+    
 }
 
-
+// MARK: - SearchBar Delegate
 extension SearchViewController: UISearchBarDelegate {
-    
     
     // search button clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         serachModel.inputSearchText.value = searchBar.text
-//        let vc = ItemViewController()
-//        
-//        if let text = searchBar.text {
-//            let str = text.replacingOccurrences(of: " ", with: "")
-//            if str.count < 2 {
-//                let msg = "2글자 이상 입력해주세요"
-//                
-//                showAlertMsg()
-//                return
-//            } else {
-//                vc.navigationTitle = str
-//            }
-//        }
-//        navigationController?.pushViewController(vc, animated: true)
-//        view.endEditing(true)
     }
+    
     
 }
 
-// MARK: - Alert Controller
+// MARK: - Alert
 extension SearchViewController {
     
     private func showAlertMsg() {

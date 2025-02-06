@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SearchViewModel {
+final class SearchViewModel {
     
     
     let navigationTitle = "네이버마켓"
@@ -15,7 +15,7 @@ class SearchViewModel {
     var inputSearchText: Observable<String?> = Observable("")
     
     
-    var outputSignal: Observable<Bool> = Observable(false)
+    var outputSignal: Observable<(Bool, String?)> = Observable((false,nil))
     
     init() {
         
@@ -38,9 +38,9 @@ class SearchViewModel {
         let resultStr = str.replacingOccurrences(of: " ", with: "")
         
         if resultStr.count < 2 {
-            outputSignal.value = false
+            outputSignal.value = (false, nil)
         } else {
-            outputSignal.value = true
+            outputSignal.value = (true, resultStr)
         }
         
     }

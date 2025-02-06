@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SnapKit
 
-class SearchView: BaseView {
+final class SearchView: BaseView {
 
     let searchBar = UISearchBar()
     let bgImage = UIImageView()
