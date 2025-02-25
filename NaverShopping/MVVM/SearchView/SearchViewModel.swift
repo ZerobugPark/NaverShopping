@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 final class SearchViewModel {
     
     
@@ -15,6 +16,7 @@ final class SearchViewModel {
     var inputSearchText: Observable<String?> = Observable("")
     
     
+
     var outputSignal: Observable<(Bool, String?)> = Observable((false,nil))
     
     init() {

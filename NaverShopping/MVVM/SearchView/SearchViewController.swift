@@ -9,24 +9,30 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    let serachView = SearchView()
-    let serachModel = SearchViewModel()
+    let searchView = SearchView()
+    let searchModel = SearchViewModel()
     
+    
+
     override func loadView() {
-        view = serachView
+        view = searchView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationtitle()
-        serachView.searchBar.delegate = self
+        searchView.searchBar.delegate = self
         bindData()
+    
     }
     
+
+    
     private func bindData() {
+  
         
-        serachModel.outputSignal.lazyBind { (status, str) in
+        searchModel.outputSignal.lazyBind { (status, str) in
             if status {
                 let vc = ResultViewController()
                 
@@ -41,7 +47,7 @@ final class SearchViewController: UIViewController {
     
     private func setNavigationtitle() {
         
-        navigationItem.title = serachModel.navigationTitle
+        navigationItem.title = searchModel.navigationTitle
         
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
@@ -57,7 +63,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     // search button clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        serachModel.inputSearchText.value = searchBar.text
+        searchModel.inputSearchText.value = searchBar.text
     }
     
     
